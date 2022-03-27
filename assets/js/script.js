@@ -8,56 +8,56 @@ var myQuestions = [
 	{
 		question: "Commonly used data types DO Not Include",
 		answers: [
-			{ text: "strings", correct: false},
-			{ text: "booleans", correct: true },
-			{ text: "alerts", correct: false },
-			{ text: "numbers", correct: false } 
+			{ text: "strings", correct: 0},
+			{ text: "booleans", correct: 1 },
+			{ text: "alerts", correct: 0 },
+			{ text: "numbers", correct: 0 } 
 		]
 	},
 	{
 		question: "The condition in an if / else statement is enclosed with _________",
 		answers: [
-			{ text: "quotes", correct: false},
-			{ text: "curly brackets", correct: true },
-			{ text: "parenthesis", correct: false },
-			{ text: "square brackets", correct: false } 
+			{ text: "quotes", correct: 0},
+			{ text: "curly brackets", correct: 1 },
+			{ text: "parenthesis", correct: 0 },
+			{ text: "square brackets", correct: 0 } 
 		]
 	},
 	{
 		question: "Arrays in JavaScript can be used to store _________.",
 		answers: [
-			{ text: "numbers and strings", correct: false},
-			{ text: "other arrays", correct: false },
-			{ text: "booleans", correct: false },
-			{ text: "all of the above", correct: true } 
+			{ text: "numbers and strings", correct: 0},
+			{ text: "other arrays", correct: 0 },
+			{ text: "booleans", correct: 0 },
+			{ text: "all of the above", correct: 1 } 
 		]
 	},
 	{
 		question: "String values must be enclosed within _____ when being assigned to variables.",
 		answers: [
-			{ text: "commas", correct: false},
-			{ text: "curly brackets", correct: false },
-			{ text: "quotess", correct: true },
-			{ text: "parenthesis", correct: false } 
+			{ text: "commas", correct: 0},
+			{ text: "curly brackets", correct: 0 },
+			{ text: "quotes", correct: 1 },
+			{ text: "parenthesis", correct: 0 } 
 		]
 	},
 	{
 		question: "A very useful tool used tool used during development and debugging for printing content to the debugger is:",
 		answers: [
-			{ text: "JavaScript", correct: false},
-			{ text: "terminal/bash", correct: false },
-			{ text: "for loops", correct: false },
-			{ text: "console log", correct: true} 
+			{ text: "JavaScript", correct: 0},
+			{ text: "terminal/bash", correct: 0 },
+			{ text: "for loops", correct: 0 },
+			{ text: "console log", correct: 1} 
 		]
 	}
 ];
 
 console.log(startQuiz);
+var secondsLeft = 75;
 
 startQuiz.addEventListener("click", function() {
 	
 	function startTimer() {
-		var secondsLeft = 75;
 		setInterval(function () { 
 			if(secondsLeft > 0) {
 			secondsLeft--;
@@ -78,13 +78,36 @@ buttonNext.addEventListener("click", function() {
 var nextQuestion = function() {
 	var shuffleQuestion = myQuestions.sort(()=>Math.random()-.5)
 	showQuestions(shuffleQuestion[0]);
+
+
+	// how do you make sure they don't repeat???
 };
 
-var showQuestions = function() {
+var showQuestions = function(question) {
+	console.log(question)
+	document.querySelector(".start-page").classList.add("hide");
+	var questionMesssage = document.createElement("h1");
+	questionMesssage.textContent = question.question;
+	document.getElementById("quiz").appendChild(questionMesssage);
 
+	for (var i = 0; i < question.answers.length; i++) {
+		var questionAnswers = document.createElement("button")
+		questionAnswers.textContent = question.answers[i].text
+		questionAnswers.setAttribute("answer", question.answers[i].correct);
+		document.getElementById("quiz").appendChild(questionAnswers);
+		questionAnswers.addEventListener("click", function(event) {
+			debugger
+			var answerCorrect = JSON.parse(event.target.getAttribute("answer"));
+			if (!answerCorrect) {
+				secondsLeft = secondsLeft - 5;
+			};
+		})
+	}
 };
 
-// If a user gets the correct answer, add 15 points to the score board
+
+
+// If a user gets the correct answer, do something
 // If the timer gets to 0, end the Quiz.
 // When a user ends the quiz, it brings the user to a ending page where they can enter their name
 // In the ending page, there should be two buttons to either save their highscore or to play again.
