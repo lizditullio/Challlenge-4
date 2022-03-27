@@ -58,6 +58,7 @@ var secondsLeft = 75;
 startQuiz.addEventListener("click", function() {
 	
 	function startTimer() {
+		nextQuestion();
 		setInterval(function () { 
 			if(secondsLeft > 0) {
 			secondsLeft--;
@@ -71,16 +72,10 @@ startQuiz.addEventListener("click", function() {
 	 startTimer();
 });
 
-buttonNext.addEventListener("click", function() {
-	nextQuestion();
-});
-
+var questionNumber = 0
 var nextQuestion = function() {
-	var shuffleQuestion = myQuestions.sort(()=>Math.random()-.5)
-	showQuestions(shuffleQuestion[0]);
-
-
-	// how do you make sure they don't repeat???
+	showQuestions(myQuestions[questionNumber]);
+	document.getElementById("quiz-question").classList.add("show");
 };
 
 var showQuestions = function(question) {
@@ -88,19 +83,23 @@ var showQuestions = function(question) {
 	document.querySelector(".start-page").classList.add("hide");
 	var questionMesssage = document.createElement("h1");
 	questionMesssage.textContent = question.question;
-	document.getElementById("quiz").appendChild(questionMesssage);
+	document.getElementById("quiz-question").appendChild(questionMesssage);
+	var questionChoices = document.createElement("div");
 
 	for (var i = 0; i < question.answers.length; i++) {
 		var questionAnswers = document.createElement("button")
 		questionAnswers.textContent = question.answers[i].text
 		questionAnswers.setAttribute("answer", question.answers[i].correct);
-		document.getElementById("quiz").appendChild(questionAnswers);
+		document.getElementById("quiz-question").appendChild(questionAnswers);
+		questionAnswers.classList.add("used")
 		questionAnswers.addEventListener("click", function(event) {
-			debugger
 			var answerCorrect = JSON.parse(event.target.getAttribute("answer"));
 			if (!answerCorrect) {
 				secondsLeft = secondsLeft - 5;
 			};
+			document.getElementById("quiz-question").classList.add("hide");
+			questionNumber++
+			nextQuestion();
 		})
 	}
 };
