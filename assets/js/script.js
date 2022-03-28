@@ -75,7 +75,6 @@ startQuiz.addEventListener("click", function() {
 var questionNumber = 0
 var nextQuestion = function() {
 	showQuestions(myQuestions[questionNumber]);
-	document.getElementById("quiz-question").classList.add("show");
 };
 
 var showQuestions = function(question) {
@@ -97,7 +96,7 @@ var showQuestions = function(question) {
 			if (!answerCorrect) {
 				secondsLeft = secondsLeft - 5;
 			};
-			document.getElementById("quiz-question").classList.add("hide");
+			document.getElementById("quiz-question").innerHTML = "";
 			questionNumber++
 			nextQuestion();
 		})
