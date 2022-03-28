@@ -72,9 +72,15 @@ startQuiz.addEventListener("click", function() {
 	 startTimer();
 });
 
-var questionNumber = 0
+var questionNumber = 0;
+console.log(questionNumber);
 var nextQuestion = function() {
-	showQuestions(myQuestions[questionNumber]);
+	if (questionNumber == myQuestions.length-1 || secondsLeft == "0") {
+		console.log("quiz is over");
+		endQuiz();
+	} else {
+		showQuestions(myQuestions[questionNumber]);
+	};
 };
 
 var showQuestions = function(question) {
@@ -97,7 +103,7 @@ var showQuestions = function(question) {
 				secondsLeft = secondsLeft - 5;
 			};
 			document.getElementById("quiz-question").innerHTML = "";
-			questionNumber++
+			questionNumber++;
 			nextQuestion();
 		})
 	}
@@ -105,7 +111,12 @@ var showQuestions = function(question) {
 
 
 
-// If a user gets the correct answer, do something
+
+var endQuiz = function() {
+	console.log("I work");
+};
+
+
 // If the timer gets to 0, end the Quiz.
 // When a user ends the quiz, it brings the user to a ending page where they can enter their name
 // In the ending page, there should be two buttons to either save their highscore or to play again.
