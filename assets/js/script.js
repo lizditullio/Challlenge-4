@@ -53,7 +53,7 @@ var myQuestions = [
 ];
 
 console.log(startQuiz);
-var secondsLeft = 75;
+var secondsLeft = 15;
 
 startQuiz.addEventListener("click", function() {
 	
@@ -63,7 +63,10 @@ startQuiz.addEventListener("click", function() {
 			if(secondsLeft > 0) {
 			secondsLeft--;
 			return timeRemaining.textContent = secondsLeft;
-			}
+			} 
+			if(secondsLeft == 0) {
+				endQuiz();
+			};
 
 		}, 1000);
 		clearInterval(startTimer);
@@ -75,7 +78,7 @@ startQuiz.addEventListener("click", function() {
 var questionNumber = 0;
 console.log(questionNumber);
 var nextQuestion = function() {
-	if (questionNumber == myQuestions.length-1 || secondsLeft == "0") {
+	if (questionNumber == myQuestions.length-1) {
 		console.log("quiz is over");
 		endQuiz();
 	} else {
@@ -114,6 +117,9 @@ var showQuestions = function(question) {
 
 var endQuiz = function() {
 	console.log("I work");
+	var highScoreQuestion = document.createElement("h1");
+	highScoreQuestion.textContent = "Enter your initials to log your score.";
+	document.getElementById("results").appendChild(highScoreQuestion);
 };
 
 
