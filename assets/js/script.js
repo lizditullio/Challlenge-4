@@ -52,29 +52,30 @@ var myQuestions = [
 	}
 ];
 
-console.log(startQuiz);
-var secondsLeft = 5;
+var secondsLeft = 75;
 
-startQuiz.addEventListener("click", function() {
+	var beginQuiz = function() {
 	
 	function startTimer() {
+		document.getElementById("results").innerHTML = "";
 		nextQuestion();
-		setInterval(function () { 
+		var interval = setInterval(function () { 
 			if(secondsLeft > 0) {
 			secondsLeft--;
 			return timeRemaining.textContent = secondsLeft;
 			} 
 			if(secondsLeft == 0) {
-				clearInterval(startTimer);
+				clearInterval(interval);
 				endQuiz();
 			};
-		//clearInterval(startTimer);
+			clearInterval(interval);
 		}, 1000);
-	
 	};
 
 	 startTimer();
-});
+};
+
+startQuiz.addEventListener("click", beginQuiz)
 
 var questionNumber = 0;
 console.log(questionNumber);
@@ -105,6 +106,7 @@ var showQuestions = function(question) {
 			var answerCorrect = JSON.parse(event.target.getAttribute("answer"));
 			if (!answerCorrect) {
 				secondsLeft = secondsLeft - 5;
+				nextQuestion();
 			};
 			document.getElementById("quiz-question").innerHTML = "";
 			questionNumber++;
@@ -114,20 +116,47 @@ var showQuestions = function(question) {
 };
 
 
-
-
 var endQuiz = function() {
-	console.log("I work");
+	var highScore = secondsLeft;
+	console.log(highScore);
+	//clear the screen 
+	document.getElementById("quiz-question").innerHTML = "";
+	
+	// allow user to save their high score 
 	var highScoreQuestion = document.createElement("h1");
 	highScoreQuestion.textContent = "Enter your initials to log your score.";
 	document.getElementById("results").appendChild(highScoreQuestion);
 
+	var initials = document.createElement("input");
+	initials.textContent = "enter your initials to save your high score";
+	document.getElementById("results").appendChild(initials);
+
+	var saveHighScore = document.createElement("button");
+	saveHighScore.textContent = "save your high score";
+	document.getElementById("results").appendChild(saveHighScore);
+
+	saveHighScore.addEventListener("click", console.log("click"));
+
+	// allow user to play again 
 	var playAgianConfirm = document.createElement("button");
 	playAgianConfirm.textContent = "play again.";
 	document.getElementById("results").appendChild(playAgianConfirm);
-
-	playAgianConfirm.addEventListener("click", console.log("click"));
+	playAgianConfirm.addEventListener("click", reset);
 };
+
+var reset = function () {
+	secondsLeft = 75; 
+	questionNumber = 0;
+	beginQuiz();
+}
+
+
+
+
+
+
+
+
 
 
 // When a user ends the quiz, it brings the user to a ending page where they can enter their name
