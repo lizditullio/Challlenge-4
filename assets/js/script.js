@@ -53,7 +53,7 @@ var myQuestions = [
 ];
 
 console.log(startQuiz);
-var secondsLeft = 15;
+var secondsLeft = 5;
 
 startQuiz.addEventListener("click", function() {
 	
@@ -65,11 +65,12 @@ startQuiz.addEventListener("click", function() {
 			return timeRemaining.textContent = secondsLeft;
 			} 
 			if(secondsLeft == 0) {
+				clearInterval(startTimer);
 				endQuiz();
 			};
-
+		//clearInterval(startTimer);
 		}, 1000);
-		clearInterval(startTimer);
+	
 	};
 
 	 startTimer();
@@ -120,9 +121,14 @@ var endQuiz = function() {
 	var highScoreQuestion = document.createElement("h1");
 	highScoreQuestion.textContent = "Enter your initials to log your score.";
 	document.getElementById("results").appendChild(highScoreQuestion);
+
+	var playAgianConfirm = document.createElement("button");
+	playAgianConfirm.textContent = "play again.";
+	document.getElementById("results").appendChild(playAgianConfirm);
+
+	playAgianConfirm.addEventListener("click", console.log("click"));
 };
 
 
-// If the timer gets to 0, end the Quiz.
 // When a user ends the quiz, it brings the user to a ending page where they can enter their name
 // In the ending page, there should be two buttons to either save their highscore or to play again.
