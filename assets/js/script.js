@@ -52,28 +52,30 @@ var myQuestions = [
 	}
 ];
 
-var secondsLeft = 75;
+var secondsLeft = 15;
+var beginQuiz = function() {
+    
+    function startTimer() {
+        document.getElementById("results").innerHTML = "";
+        nextQuestion();
+        var interval = setInterval(function () { 
+            if(secondsLeft > 0) {
+            secondsLeft--;
+            return timeRemaining.textContent = secondsLeft;
+            } 
+            if(secondsLeft == 0) {
+                clearInterval(interval);
+				if (questionNumber !== myQuestions.length-1) {
+					endQuiz();
+				};
+            };
+            clearInterval(interval);
+        }, 1000);
+    };
 
-	var beginQuiz = function() {
-	
-	function startTimer() {
-		document.getElementById("results").innerHTML = "";
-		nextQuestion();
-		var interval = setInterval(function () { 
-			if(secondsLeft > 0) {
-			secondsLeft--;
-			return timeRemaining.textContent = secondsLeft;
-			} 
-			if(secondsLeft == 0) {
-				clearInterval(interval);
-				endQuiz();
-			};
-			clearInterval(interval);
-		}, 1000);
-	};
-
-	 startTimer();
+     startTimer();
 };
+
 
 startQuiz.addEventListener("click", beginQuiz)
 
@@ -117,25 +119,36 @@ var showQuestions = function(question) {
 
 
 var endQuiz = function() {
+	document.getElementById("nav").classList.add("hide");
 	var highScore = secondsLeft;
 	console.log(highScore);
 	//clear the screen 
 	document.getElementById("quiz-question").innerHTML = "";
 	
 	// allow user to save their high score 
-	var highScoreQuestion = document.createElement("h1");
-	highScoreQuestion.textContent = "Enter your initials to log your score.";
-	document.getElementById("results").appendChild(highScoreQuestion);
+	if (secondsLeft > 0) {
+		var endPage = document.createElement("h1");
+		endPage.textContent = ("Congrats! You finshed the quiz with a score of " + secondsLeft + ".");
+		document.getElementById("results").appendChild(endPage);
+	
+		var saveScore = document.createElement("h2");
+		saveScore.textContent = ("Please enter your initials to save your score.");
+		document.getElementById("results").appendChild(saveScore);
+	
+	
+		var initials = document.createElement("input");
+		initials.textContent = "enter your initials to save your high score";
+		document.getElementById("results").appendChild(initials);
+	
+		var saveHighScore = document.createElement("button");
+		saveHighScore.textContent = "save your high score";
+		document.getElementById("results").appendChild(saveHighScore);
+	} else {
+		var outOfTime = document.createElement("h1");
+		outOfTime.textContent = ("Sorry! You ran out of time. Try again?");
+		document.getElementById("results").appendChild(outOfTime);
+	};
 
-	var initials = document.createElement("input");
-	initials.textContent = "enter your initials to save your high score";
-	document.getElementById("results").appendChild(initials);
-
-	var saveHighScore = document.createElement("button");
-	saveHighScore.textContent = "save your high score";
-	document.getElementById("results").appendChild(saveHighScore);
-
-	saveHighScore.addEventListener("click", console.log("click"));
 
 	// allow user to play again 
 	var playAgianConfirm = document.createElement("button");
@@ -148,16 +161,6 @@ var reset = function () {
 	secondsLeft = 75; 
 	questionNumber = 0;
 	beginQuiz();
-}
-
-
-
-
-
-
-
-
-
+};
 
 // When a user ends the quiz, it brings the user to a ending page where they can enter their name
-// In the ending page, there should be two buttons to either save their highscore or to play again.
