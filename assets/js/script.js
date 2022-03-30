@@ -52,9 +52,14 @@ var myQuestions = [
 	}
 ];
 
-var secondsLeft = 15;
+var highScoreArr = [
+	{user: ""},
+	{score: ""}
+];
+
+var secondsLeft = 75;
 var beginQuiz = function() {
-    
+	displayHighScore();
     function startTimer() {
         document.getElementById("results").innerHTML = "";
         nextQuestion();
@@ -131,18 +136,26 @@ var endQuiz = function() {
 		endPage.textContent = ("Congrats! You finshed the quiz with a score of " + secondsLeft + ".");
 		document.getElementById("results").appendChild(endPage);
 	
-		var saveScore = document.createElement("h2");
-		saveScore.textContent = ("Please enter your initials to save your score.");
-		document.getElementById("results").appendChild(saveScore);
+		var saveScorePrompt = document.createElement("h2");
+		saveScorePrompt.textContent = ("Please enter your initials to save your score.");
+		document.getElementById("results").appendChild(saveScorePrompt);
 	
 	
-		var initials = document.createElement("input");
-		initials.textContent = "enter your initials to save your high score";
-		document.getElementById("results").appendChild(initials);
+		var initialsPrompt = document.createElement("input");
+		initialsPrompt.textContent = "enter your initials to save your high score";
+		document.getElementById("results").appendChild(initialsPrompt);
 	
 		var saveHighScore = document.createElement("button");
 		saveHighScore.textContent = "save your high score";
 		document.getElementById("results").appendChild(saveHighScore);
+
+		saveHighScore.addEventListener("click", function(){
+			var initials = document.querySelector("input").value;
+			highScoreArr = [initials, highScore];
+			console.log(highScoreArr);
+			saveScore();
+		});
+
 	} else {
 		var outOfTime = document.createElement("h1");
 		outOfTime.textContent = ("Sorry! You ran out of time. Try again?");
@@ -163,4 +176,19 @@ var reset = function () {
 	beginQuiz();
 };
 
-// When a user ends the quiz, it brings the user to a ending page where they can enter their name
+var saveScore = function() {
+	localStorage.setItem("highscore", JSON.stringify(highScoreArr));
+  };
+
+
+var displayHighScore = function() {
+	var highestScore = JSON.parse(localStorage.getItem("highscore"));
+	console.log("the highest score is " + highestScore);
+	if (highScore > highestScore[1]) {
+		highestScore = highScoreArr;
+	};
+	localStorage.setItem("highscore", JSON.stringify(highestScore));
+	var newHighScore = document.createElement("p")
+	newHighScore.textContent = (highestScore[0] + " score: " + highestScore[1]);
+	document.getElementById("nav").appendChild(newHighScore);
+};
