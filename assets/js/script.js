@@ -189,7 +189,7 @@ var endQuiz = function() {
 var reset = function () {
 	secondsLeft = 75; 
 	questionNumber = 0;
-	beginQuiz();
+	window.location.reload();
 };
 
 var saveScore = function() {
