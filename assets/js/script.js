@@ -5,6 +5,8 @@ var buttonNext = document.getElementById("btn-next");
 var submitButton = document.getElementById("submit");
 var answerValidation = document.getElementById("answer-validation")
 var correctOrNot = document.getElementById("correct-or-not");
+var highestScore = JSON.parse(localStorage.getItem("highscore"));
+var displayedScore = document.createElement("p");
 
 var myQuestions = [
 	{
@@ -81,9 +83,8 @@ var beginQuiz = function() {
             clearInterval(interval);
         }, 1000);
     };
-	
-	displayHighScore();
-     startTimer();
+	checkHighScore();
+	startTimer();
 };
 
 
@@ -196,17 +197,22 @@ var saveScore = function() {
   };
 
 
-var displayHighScore = function() {
-	var highestScore = JSON.parse(localStorage.getItem("highscore"));
+var checkHighScore = function() {
 	console.log("the highest score is " + highestScore);
-	if (highScore > highestScore[1]) {
-		highestScore = highScoreArr;
+	if (!highestScore) {
+		displayedScore.textContent = "No Scores Yet!";
+		document.getElementById("nav").appendChild(displayedScore);
 	} else {
-		highestScore === "";
+		displayHighScore();
 	};
+};
+
+var displayHighScore = function() {
+	if (highScore > highestScore.score) {
+		highestScore = highScoreArr;
+		displayedScore.textContent = "";
+	};
+	displayedScore.textContent = (highestScore[0] + " Score: " + highestScore[1]);
+	document.getElementById("nav").appendChild(displayedScore);
 	localStorage.setItem("highscore", JSON.stringify(highestScore));
-	var newHighScore = document.createElement("p")
-	//newHighScore.style.marginTop = "-6px";
-	newHighScore.textContent = (highestScore[0] + " Score: " + highestScore[1]);
-	document.getElementById("nav").appendChild(newHighScore);
 };
