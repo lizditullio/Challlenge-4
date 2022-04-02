@@ -201,6 +201,8 @@ var displayHighScore = function() {
 	console.log("the highest score is " + highestScore);
 	if (highScore > highestScore[1]) {
 		highestScore = highScoreArr;
+	} else {
+		highestScore === "";
 	};
 	localStorage.setItem("highscore", JSON.stringify(highestScore));
 	var newHighScore = document.createElement("p")
