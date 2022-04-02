@@ -59,15 +59,17 @@ var highScoreArr = [
 
 var secondsLeft = 75;
 var beginQuiz = function() {
-	displayHighScore();
     function startTimer() {
         document.getElementById("results").innerHTML = "";
         nextQuestion();
         var interval = setInterval(function () { 
-            if(secondsLeft > 0) {
+            if (secondsLeft <= 11) {
+				timeRemaining.classList.add("red");
+			};
+			if(secondsLeft > 0) {
             secondsLeft--;
             return timeRemaining.textContent = secondsLeft;
-            } 
+            };
             if(secondsLeft == 0) {
                 clearInterval(interval);
 				if (questionNumber !== myQuestions.length-1) {
@@ -77,7 +79,8 @@ var beginQuiz = function() {
             clearInterval(interval);
         }, 1000);
     };
-
+	
+	displayHighScore();
      startTimer();
 };
 
@@ -97,6 +100,7 @@ var nextQuestion = function() {
 
 var showQuestions = function(question) {
 	console.log(question)
+	debugger
 	document.querySelector(".start-page").classList.add("hide");
 	var questionMesssage = document.createElement("h1");
 	questionMesssage.textContent = question.question;
@@ -105,15 +109,23 @@ var showQuestions = function(question) {
 
 	for (var i = 0; i < question.answers.length; i++) {
 		var questionAnswers = document.createElement("button")
-		questionAnswers.textContent = question.answers[i].text
+		questionAnswers.textContent = question.answers[i].text;
+		questionAnswers.classList.add("answers-style")
 		questionAnswers.setAttribute("answer", question.answers[i].correct);
 		document.getElementById("quiz-question").appendChild(questionAnswers);
 		questionAnswers.classList.add("used")
 		questionAnswers.addEventListener("click", function(event) {
 			var answerCorrect = JSON.parse(event.target.getAttribute("answer"));
+			var answerValidation = document.createElement("p");
 			if (!answerCorrect) {
+				answerValidation.textContent = "Wrong!";
+				document.getElementById("quiz-question").appendChild(answerValidation);
 				secondsLeft = secondsLeft - 5;
 				nextQuestion();
+			}; 
+			if (answerCorrect) {
+				answerValidation.textContent = "Correct!";
+				document.getElementById("quiz-question").appendChild(answerValidation);
 			};
 			document.getElementById("quiz-question").innerHTML = "";
 			questionNumber++;
@@ -189,6 +201,7 @@ var displayHighScore = function() {
 	};
 	localStorage.setItem("highscore", JSON.stringify(highestScore));
 	var newHighScore = document.createElement("p")
-	newHighScore.textContent = (highestScore[0] + " score: " + highestScore[1]);
+	//newHighScore.style.marginTop = "-6px";
+	newHighScore.textContent = (highestScore[0] + " Score: " + highestScore[1]);
 	document.getElementById("nav").appendChild(newHighScore);
 };

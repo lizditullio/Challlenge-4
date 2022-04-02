@@ -10,28 +10,30 @@
 <body>
     <nav id ="nav">
         <form>
+            <div class="score">
+                <label for="high-score"> High Scores: </label>
+                <div id="score" placeholder="0"></div>
+            </div>
             <div class="timer">
                 <label for="time-remaining"> Time Remaining: </label>
                 <div id="time-remaining" placeholder="0"> 
                 </div>
             </div>
-            <div class="score">
-                <label for="high-score"> High Scores: </label>
-                <div id="score" placeholder="0"></div>
-            </div>
         </form>
     </nav>
-    <div class="start-page">
-        <h1> Welcome to my quiz</h1>
-        <p>
-            Click on the start button to get started.
-        </p>
-        <button id="start-btn">Start </button>
-    </div>
-    <div id="quiz">
-        <div id="quiz-question"></div>
-    </div>
-    <div id="results"></div>
+    <main>
+        <div class="start-page">
+            <h1> Welcome to my quiz</h1>
+            <p>
+                Click on the start button to get started.
+            </p>
+            <button id="start-btn">Start </button>
+        </div>
+        <div id="quiz">
+            <div id="quiz-question"></div>
+        </div>
+        <div id="results"></div>
+    </main>
     <script src="./assets/js/script.js"></script>
 </body>
 </html>

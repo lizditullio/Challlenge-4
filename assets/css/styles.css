@@ -1,3 +1,18 @@
+:root {
+    --primary-color: purple;
+    --secondary-color: plum;
+    
+  }
+
+body {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+}
+
 .hide {
     display: none;
 }
@@ -5,3 +20,54 @@
 .show {
     display: show;
 }
+
+nav form {
+    display: flex;
+    justify-content: space-between;
+}
+
+nav p {
+    display: relative;
+    margin-top: 0px;
+}
+
+.timer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#time-remaining {
+    margin-left: 1rem;
+}
+
+.score label {
+    color: var(--secondary-color);
+}
+
+button {
+    padding: 5px 10px 5px 10px;
+    border-radius: 10px;
+    background-color: var(--primary-color);
+    color: whitesmoke;
+}
+
+button:hover {
+    background-color: var(--secondary-color)
+}
+
+.red {
+    font-size: 20px;
+    color: red;
+}
+
+#quiz-question {
+    align-items: center;
+}
+
+.answers-style {
+    display: flex;
+    flex-direction: column;
+    margin-top: .25rem;
+}
+
