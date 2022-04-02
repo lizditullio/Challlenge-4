@@ -3,6 +3,8 @@ var highScore = document.getElementById("high-score");
 var startQuiz = document.getElementById("start-btn");
 var buttonNext = document.getElementById("btn-next");
 var submitButton = document.getElementById("submit");
+var answerValidation = document.getElementById("answer-validation")
+var correctOrNot = document.getElementById("correct-or-not");
 
 var myQuestions = [
 	{
@@ -100,7 +102,6 @@ var nextQuestion = function() {
 
 var showQuestions = function(question) {
 	console.log(question)
-	debugger
 	document.querySelector(".start-page").classList.add("hide");
 	var questionMesssage = document.createElement("h1");
 	questionMesssage.textContent = question.question;
@@ -116,16 +117,17 @@ var showQuestions = function(question) {
 		questionAnswers.classList.add("used")
 		questionAnswers.addEventListener("click", function(event) {
 			var answerCorrect = JSON.parse(event.target.getAttribute("answer"));
-			var answerValidation = document.createElement("p");
 			if (!answerCorrect) {
-				answerValidation.textContent = "Wrong!";
-				document.getElementById("quiz-question").appendChild(answerValidation);
+				correctOrNot.classList.add("validation")
+				correctOrNot.textContent = "Wrong!";
+				answerValidation.appendChild(correctOrNot);
 				secondsLeft = secondsLeft - 5;
 				nextQuestion();
 			}; 
 			if (answerCorrect) {
-				answerValidation.textContent = "Correct!";
-				document.getElementById("quiz-question").appendChild(answerValidation);
+				correctOrNot.classList.add("validation")
+				correctOrNot.textContent = "Correct!";
+				answerValidation.appendChild(correctOrNot);
 			};
 			document.getElementById("quiz-question").innerHTML = "";
 			questionNumber++;
@@ -141,6 +143,7 @@ var endQuiz = function() {
 	console.log(highScore);
 	//clear the screen 
 	document.getElementById("quiz-question").innerHTML = "";
+	document.getElementById("answer-validation").innerHTML = "";
 	
 	// allow user to save their high score 
 	if (secondsLeft > 0) {
