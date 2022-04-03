@@ -61,6 +61,7 @@ var highScoreArr = [
 	{score: ""}
 ];
 
+// create and set timer 
 var secondsLeft = 75;
 var beginQuiz = function() {
     function startTimer() {
@@ -90,6 +91,7 @@ var beginQuiz = function() {
 
 startQuiz.addEventListener("click", beginQuiz)
 
+// iterate to the next question on the list and push the question in the next function 
 var questionNumber = 0;
 console.log(questionNumber);
 var nextQuestion = function() {
@@ -101,14 +103,16 @@ var nextQuestion = function() {
 	};
 };
 
+// hide the welcome page 
 var showQuestions = function(question) {
 	console.log(question)
 	document.querySelector(".start-page").classList.add("hide");
+// generate element to display the question 
 	var questionMesssage = document.createElement("h1");
 	questionMesssage.textContent = question.question;
 	document.getElementById("quiz-question").appendChild(questionMesssage);
 	var questionChoices = document.createElement("div");
-
+// generate elements to display the answers
 	for (var i = 0; i < question.answers.length; i++) {
 		var questionAnswers = document.createElement("button")
 		questionAnswers.textContent = question.answers[i].text;
@@ -118,6 +122,7 @@ var showQuestions = function(question) {
 		questionAnswers.classList.add("used")
 		questionAnswers.addEventListener("click", function(event) {
 			var answerCorrect = JSON.parse(event.target.getAttribute("answer"));
+			// provide user with feedback on their answer choice 
 			if (!answerCorrect) {
 				correctOrNot.classList.add("validation")
 				correctOrNot.textContent = "Wrong!";
@@ -137,7 +142,7 @@ var showQuestions = function(question) {
 	}
 };
 
-
+// hide questions and answers 
 var endQuiz = function() {
 	document.getElementById("nav").classList.add("hide");
 	var highScore = secondsLeft;
@@ -186,17 +191,19 @@ var endQuiz = function() {
 	playAgianConfirm.addEventListener("click", reset);
 };
 
+//reset values so user can play again
 var reset = function () {
 	secondsLeft = 75; 
 	questionNumber = 0;
 	window.location.reload();
 };
 
+// save high score to local storage 
 var saveScore = function() {
 	localStorage.setItem("highscore", JSON.stringify(highScoreArr));
   };
 
-
+// check to see if there are any high scores in local storage and display a message if there are no scores yet 
 var checkHighScore = function() {
 	console.log("the highest score is " + highestScore);
 	if (!highestScore) {
@@ -207,6 +214,7 @@ var checkHighScore = function() {
 	};
 };
 
+// create an element to display the high score 
 var displayHighScore = function() {
 	if (highScore > highestScore.score) {
 		highestScore = highScoreArr;

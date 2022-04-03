@@ -21,6 +21,7 @@ main {
     display: show;
 }
 
+/* navigation bar styling start */
 nav form {
     display: flex;
     justify-content: space-between;
@@ -30,7 +31,9 @@ nav p {
     display: relative;
     margin-top: 0px;
 }
+/* navigation bar styling end */
 
+/*timer styling start */
 .timer {
     display: flex;
     justify-content: center;
@@ -41,10 +44,19 @@ nav p {
     margin-left: 1rem;
 }
 
+.red {
+    font-size: 20px;
+    color: red;
+} 
+/*timer styling end */
+
+/* high score styling start*/
 .score label {
     color: var(--secondary-color);
 }
+/* high score styling start*/
 
+/* question styling start*/
 button {
     padding: 5px 10px 5px 10px;
     border-radius: 10px;
@@ -56,10 +68,6 @@ button:hover {
     background-color: var(--secondary-color)
 }
 
-.red {
-    font-size: 20px;
-    color: red;
-}
 
 #quiz-question {
     align-items: center;
@@ -76,4 +84,4 @@ button:hover {
     color: gray;
     border-top: 2px solid rgb(194, 194, 194);
 }
-    
+/* question styling end*/
